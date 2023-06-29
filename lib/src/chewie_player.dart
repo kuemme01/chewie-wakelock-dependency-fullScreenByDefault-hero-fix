@@ -558,10 +558,6 @@ class ChewieController extends ChangeNotifier {
     }
 
     if (autoPlay) {
-      if (fullScreenByDefault) {
-        enterFullScreen();
-      }
-
       await videoPlayerController.play();
     }
 
@@ -570,14 +566,17 @@ class ChewieController extends ChangeNotifier {
     }
 
     if (fullScreenByDefault) {
-      videoPlayerController.addListener(_fullScreenListener);
+      videoPlayerController.addListener(_tryToEnableFullScreen);
     }
   }
 
-  Future<void> _fullScreenListener() async {
-    if (videoPlayerController.value.isPlaying && !_isFullScreen) {
+  Future<void> _tryToEnableFullScreen() async {
+    if (fullScreenByDefault &&
+        _isFullScreen == false &&
+        videoPlayerController.value.isPlaying &&
+        hasListeners) {
       enterFullScreen();
-      videoPlayerController.removeListener(_fullScreenListener);
+      videoPlayerController.removeListener(_tryToEnableFullScreen);
     }
   }
 
