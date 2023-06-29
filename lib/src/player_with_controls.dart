@@ -76,7 +76,6 @@ class PlayerWithControls extends StatelessWidget {
             buildControls(context, chewieController)
           else
             SafeArea(
-              bottom: false,
               child: buildControls(context, chewieController),
             ),
         ],
