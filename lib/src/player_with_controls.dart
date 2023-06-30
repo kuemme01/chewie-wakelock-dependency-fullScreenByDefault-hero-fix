@@ -75,8 +75,13 @@ class PlayerWithControls extends StatelessWidget {
           if (!chewieController.isFullScreen)
             buildControls(context, chewieController)
           else
-            SafeArea(
-              child: buildControls(context, chewieController),
+            GestureDetector(
+              onVerticalDragEnd: (dragDetails) {
+                chewieController.toggleFullScreen();
+              },
+              child: SafeArea(
+                child: buildControls(context, chewieController),
+              ),
             ),
         ],
       );
